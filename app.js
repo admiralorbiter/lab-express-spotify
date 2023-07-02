@@ -31,6 +31,7 @@ spotifyApi
 
 
 // Our routes go here:
+app.use(express.static('public')) // 'public' should be the name of your directory containing static files
 
 app.get('/', (req, res) =>{
   res.redirect('/playlist-container');
@@ -47,6 +48,8 @@ app.get('/playlist-container', (req, res) =>{
   })
   .catch(err => console.log('The error while searching artists occurred: ', err));
 })
+
+
 
 app.get('/artist-search', (req, res) =>{
   
@@ -76,6 +79,18 @@ app.get('/albums/:artistId', (req, res, next) =>{
       console.log('Error', err);
       next(err);
     })
+})
+
+app.get('/playlist/:id', (req, res) =>{
+  console.log("Getting playlist ", req.params.id);
+  spotifyApi
+  .getPlaylist(req.params.id)
+  .then(data => {
+    const tracks = data.body.tracks.items;
+    console.log('The received data from the API: ', tracks);
+    res.render('playlist', {tracks});
+  })
+  .catch(err => console.log('The error while searching artists occurred: ', err));
 })
 
 
