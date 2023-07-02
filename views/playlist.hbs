@@ -1,7 +1,20 @@
-{{#each tracks}}
-    <h2>{{this.track.name}}</h2>
-    <h3>{{this.track.artists.[0].name}}</h3>
-    <audio controls>
-        <source src="{{this.track.preview_url}}" type="audio/mp3">
-    </audio>
-{{/each}}
+<div id="playlist-container">
+   {{#each tracks}}
+       <div class="playlist-item">
+           <h2>{{this.track.name}}</h2>
+           <h3>{{this.track.artists.[0].name}}</h3>
+           <audio controls>
+               <source src="{{this.track.preview_url}}" type="audio/mp3">
+           </audio>
+       </div>
+   {{/each}}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
+<script>
+    const playlistContainer = document.getElementById('playlist-container');
+
+new Sortable(playlistContainer, {
+   animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
+   handle: ".playlist-item", // Restricts sort start click/touch to the specified element
+});
+</script>
