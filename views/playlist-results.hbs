@@ -1,0 +1,49 @@
+<style>
+  .playlist-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .playlist-card {
+    flex: 0 0 auto;
+    text-align: center;
+  }
+</style>
+
+<h1>Welcome</h1>
+<div class="playlist-container" id="playlist-container">
+    {{#each playlists}}
+        <div class="playlist-card" style="display:none;">
+        <h2>{{name}}</h2>
+        <img src="{{images.[0].url}}" alt="{{name}}" style="width:100px; height:100px">
+        <a href="/playlist/{{id}}">View Playlist</a>
+        </div>
+    {{/each}}
+    <button id="show-more" style="display:none;">Show More</button>
+</div> 
+
+<script>window.onload = function() {
+  var playlistCards = document.getElementsByClassName("playlist-card");
+  var showMoreButton = document.getElementById("show-more");
+
+  if (playlistCards.length > 5) {
+    showMoreButton.style.display = "block";
+
+    for (var i = 0; i < 5; i++) {
+      playlistCards[i].style.display = "block";
+    }
+  } else {
+    for (var i = 0; i < playlistCards.length; i++) {
+      playlistCards[i].style.display = "block";
+    }
+  }
+
+  showMoreButton.addEventListener("click", function() {
+    for (var i = 5; i < playlistCards.length; i++) {
+      playlistCards[i].style.display = "block";
+    }
+    showMoreButton.style.display = "none";
+  });
+}
+</script>
